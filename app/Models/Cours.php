@@ -3,15 +3,22 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 class Cours extends Model
-{
-     protected $fillable = ['nom_module', 'volume_horaire', 'specialite_id', 'semestre_id'];
+{     // Important : forcer le nom de la table (sinon Laravel cherche "couses")
+    protected $table = 'cours';
 
-     public function specialite(): BelongsTo  {
-        return $this>belongsTo(Specialite::class); }
-     public function semestre(): BelongsTo    {
-         return $this>belongsTo(Semestre::class); }
-     public function cours(): HasMany          {
-        return $this>hasMany(Cours::class); }
+    protected $fillable = ['intitule_cours', 'module_id'];
+
+    public function module(): BelongsTo { return $this>belongsTo(Module::class); }
+
+    // Un cours peut être enseigné par plusieurs enseignants
+
+    public function enseignants(): BelongsToMany
+     {
+        return $this->belongsToMany(Enseignant::class, 'enseigner');
+        }
+    public function seances(): HasMany { return $this->hasMany(Seance::class); }
 }

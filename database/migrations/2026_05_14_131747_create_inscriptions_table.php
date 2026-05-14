@@ -16,7 +16,7 @@ return new class extends Migration
             $table->date('date_inscription');
             $table->foreignId('etudiant_id')->constrained()->restrictOnDelete();
             $table->foreignId('specialite_id')->constrained()->restrictOnDelete();
-            $table->foreignId('niveau_id')->constrained('niveaux')>restrictOnDelete();
+            $table->foreignId('niveau_id')->constrained('niveaux')->restrictOnDelete();
             $table->foreignId('annee_academique_id')
                   ->constrained('annees_academiques')->restrictOnDelete();
             $table->timestamps();

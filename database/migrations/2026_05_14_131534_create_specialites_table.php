@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('specialites', function (Blueprint $table) {
             $table->id();
+             $table->string('nom_specialite', 150);
+             $table->foreignId('filiere_id')
+             ->constrained('filieres')
+             ->restrictOnDelete()
+             ->cascadeOnUpdate();
+
             $table->timestamps();
         });
     }

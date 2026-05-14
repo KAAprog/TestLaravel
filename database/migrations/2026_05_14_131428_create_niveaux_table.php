@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('niveaux', function (Blueprint $table) {
             $table->id();
+            $table->string('libelle', 50)->unique(); // L1, L2, L3, M1, M2 
             $table->timestamps();
         });
     }

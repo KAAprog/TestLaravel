@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('semestres', function (Blueprint $table) {
             $table->id();
+           $table->string('libelle', 50);
+           $table->integer('numero')->unique();
+           $table->foreignId('niveau_id')
+           ->constrained('niveaux')
+           ->restrictOnDelete()
+           ->cascadeOnUpdate();
             $table->timestamps();
         });
     }

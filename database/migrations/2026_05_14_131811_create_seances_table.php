@@ -12,8 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('seances', function (Blueprint $table) {
-            $table->id();
+            $table->id();$table->date('date_seance');         $table->time('heure_debut');
+            $table->time('heure_fin');
+            $table->foreignId('cours_id')->constrained('cours')->restrictOnDelete();
+            $table->foreignId('salle_id')->constrained()->restrictOnDelete();
+            $table->foreignId('enseignant_id')->constrained()->restrictOnDelete();
+            $table->foreignId('semestre_id')->constrained()->restrictOnDelete();
+            $table->foreignId('annee_academique_id')
+                  ->constrained('annees_academiques')->restrictOnDelete();
             $table->timestamps();
+            $table->unique(['salle_id', 'date_seance', 'heure_debut'],'uk_salle_creneau');
         });
     }
 

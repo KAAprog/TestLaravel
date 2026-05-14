@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('salles', function (Blueprint $table) {
             $table->id();
+             $table->string('nom_salle', 50)->unique();
+             $table->integer('capacite')->default(30);
+             $table->string('batiment', 100)->nullable();
             $table->timestamps();
         });
     }

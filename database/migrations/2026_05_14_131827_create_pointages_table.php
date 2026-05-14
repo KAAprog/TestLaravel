@@ -13,7 +13,13 @@ return new class extends Migration
     {
         Schema::create('pointages', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+             $table->enum('statut', ['Present', 'Absent', 'Retard'])->default('Absent');
+             $table->text('observation')->nullable();
+             $table->dateTime('date_pointage')->useCurrent();
+             $table->foreignId('seance_id')->constrained()->cascadeOnDelete();
+             $table->foreignId('etudiant_id')->constrained()->restrictOnDelete();
+             $table->timestamps();
+            $table->unique(['seance_id', 'etudiant_id'], 'uk_pointage');
         });
     }
 

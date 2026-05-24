@@ -12,38 +12,28 @@ class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
+    // Colonnes remplissables en masse
     protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
+        'nom', 'prenom', 'login', 'email', 'password', 'role', 'statut',     ];
+    // Colonnes cachées lors de la sérialisation JSON
+        protected $hidden = [
+        'password', 'remember_token',     ];
+    // Cast automatique du hachage
+        protected function casts(): array     {
+            return [
+                'password' => 'hashed',         ];
+                 }
+    // Helpers de rôle
+         public function isDirecteur(): bool     {
+            return $this->role === 'DIRECTEUR';
+             }
+        public function isResponsableAcademique(): bool     {
+            return $this->role === 'RESPONSABLE_ACADEMIQUE';
+             }
+        public function isChargeDiscipline(): bool{
+            return $this->role === 'CHARGE_DISCIPLINE';
+             }
+        public function getNomCompletAttribute(): string {
+            return $this->prenom . ' ' . $this->nom; }
 }
+
